@@ -1,0 +1,32 @@
+.carousel{
+    border-radius: 10px;
+}
+
+.carousel .thumbs {
+    display: flex;
+    justify-content: space-between;
+    padding: 0;
+    cursor: pointer;
+    
+
+    li{
+        padding:0%;
+        margin: 0%;
+    }
+}
+
+.thumb{
+    border-radius: 10px;
+}
+
+.carousel .thumb.selected, .carousel .thumb:hover {
+    border: 3px solid orangered;
+}
+
+.carousel .carousel-status{
+    display: none;
+}
+
+.carousel .thumbs-wrapper {
+    margin: 0px
+}
