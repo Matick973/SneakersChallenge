@@ -1,8 +1,7 @@
 import React from "react";
-import { useEffect, useState, useRef } from "react";
+import { useState, useRef } from "react";
 import { GetLocalStorage } from "./LocalStorageMng";
 import { SetLocalStorage } from "./LocalStorageMng";
-import { RemoveLocalStorage } from "./LocalStorageMng";
 import cartIcon from "../Images/icon-cart.svg"
 import minusbtn from "../Images/icon-minus.svg"
 import plusbtn from "../Images/icon-plus.svg"
@@ -21,6 +20,19 @@ function AddToCart () {
         console.log("valeur incorrecte")
     }
 
+    function fetchLS (localData) {
+        const displayQte = document.querySelector(".displayInCart");
+        localData = GetLocalStorage('Product')
+        
+        if(localData){          
+            displayQte.innerHTML = localData.quantity
+            console.log(localData.quantity)
+        }else{
+         
+            console.log("panier vide")
+        }
+    }
+
     return(
         <>
         <span>
@@ -37,20 +49,20 @@ function AddToCart () {
 
         </span>    
 
-            <div className="addToCart-container" onClick={(e) => {e.preventDefault(); SetLocalStorage(inputValue)}}>
+            <div className="addToCart-container" onClick={(e) => {e.preventDefault(); SetLocalStorage(inputValue); fetchLS()}}>
                 <span className="addToCart-logo">
                     <img src={cartIcon} alt="cart icon"/>
                 </span>
 
                 <span className="addToCart-text">       
-                    <div >
+                    <div className="Btn addToCartBtn">
                         Add to cart
                     </div>
                 </span>
             </div>
 
-            </>
-        )
+        </>
+    )
 
 }
 

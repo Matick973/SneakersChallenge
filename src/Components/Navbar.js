@@ -7,7 +7,7 @@ import '../Styles/Navbar.scss';
 import Cart from "./Cart";
 
 
-const Navbar = () => {
+const Navbar = ({product}) => {
     
     
     return(
@@ -16,9 +16,9 @@ const Navbar = () => {
 
             <div className="header-left">
                 <Burger/>
-                <div className="logo">
+                <Link to="*"className="logo">
                     <img src={Logo} alt="logo du site"/>
-                </div>
+                </Link>
                 
                 <nav className="navbar-container">
                     <ul>

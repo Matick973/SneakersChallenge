@@ -3,14 +3,32 @@ import { useEffect, useState, useRef } from "react";
 import { GetLocalStorage } from "./LocalStorageMng";
 import { RemoveLocalStorage } from "./LocalStorageMng";
 import CartIcon from '../Images/icon-cart.svg';
-import deleteIcon from "../Images/icon-delete.svg"
+import DeleteIcon from "../Images/icon-delete.svg"
+import Image1 from '../Images/image-product-1-thumbnail.jpg'
 import '../Styles/Navbar.scss';
 
 const Cart = () => {
 
     const [ isOpen, setIsOpen ] = useState(false)
+    const [ isEmpty, setIsEmpty ] = useState(true)
+    const [ product, setProduct ] = useState([])
 
     let cartRef = useRef()
+    let initialPrice = 125
+
+    function fetchLS (localData) {
+        localData = GetLocalStorage('Product')
+        
+        if(localData){
+            setProduct(localData)
+            setIsEmpty(false)
+        }else{
+            setIsEmpty(true)
+            setProduct([])
+            console.log("panier vide")
+        }
+    }
+
 
     useEffect (() => {
        
@@ -33,10 +51,10 @@ const Cart = () => {
         return (
         
         <div ref={cartRef}>
-         
+            <div className="displayInCart"></div>
             <div className="cart-modal" >
-
-                <div className="cart-logo" onClick={(e) => {e.preventDefault(); GetLocalStorage(); setIsOpen(!isOpen)}}>
+                
+                <div className="cart-logo" onClick={(e) => {e.preventDefault(); fetchLS(); setIsOpen(!isOpen)}}>
                     <img src={CartIcon} alt="Cart"/>
                 </div>
 
@@ -48,23 +66,38 @@ const Cart = () => {
                 </h3>
                 <div className="grey-line"></div>
 
-                {isEmpty ? (
+                {isEmpty === true ? (
             
-                <div className="">
-                    <p> Your cart is empty.</p>
+                <div className="cart-container">
+                    <p>Your cart is empty.</p>
                 </div>    
         
                 ) : 
                 
-                <div onClick={toggleModal} className="overlay">
-                <form className="modal-content">
-                    <span onClick={toggleModal} className="close-modal" title="Close Modal">&times;</span>
-                
-                    <div className="container">
-                    <img src={picture} aria-hidden alt="une image" id="modal-img"/>
+                <div className="cart-container">
+                    <div className="cart-product">
+                        <div className="picture-product">
+                            <img src={Image1} alt="sneaker"/>
+                        </div>  
+
+                        <div className="details-product">
+                            <div className="product-name"><p>{product.name}</p></div>
+                            <div className="prices">
+                               <div className="product-initial-price">${initialPrice}</div> 
+                               <div className="product-quantity"><p>{product.quantity}</p></div> 
+                               <div className="product-total-price">${Number(initialPrice)*product.quantity}</div> 
+                            </div>
+                            
+                        </div>   
+
+                        <div className="bin-icon" onClick={(e) => {e.preventDefault(); RemoveLocalStorage(); setIsEmpty(true); setIsOpen(false)}}>
+                            <img src={DeleteIcon} alt="bin delete remove icon"/>
+                        </div>     
                     </div>
 
-                </form>
+                    <div className="Btn CheckoutBtn">
+                            <div><p>Checkout</p></div>
+                    </div>
                 </div>
 
                 }

@@ -19,7 +19,7 @@
         try {
            const item = window.localStorage.getItem("Product")
             if (item) {
-                console.log(JSON.parse(item)) 
+                return(JSON.parse(item)) 
             }
         }
 
@@ -27,13 +27,13 @@
             console.log(err)
         }
 
-        return GetLocalStorage
+      
     }
     
     
     export function RemoveLocalStorage () {
         try {
-            window.localStorage.removeItem()
+            window.localStorage.clear()
         }
 
         catch (err){
